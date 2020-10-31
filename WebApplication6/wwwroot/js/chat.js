@@ -3,6 +3,7 @@
     sendMessage();
 });
 
+//var serverIP = "http://188.168.25.149";
 
 // Идет в данный момент отправка сообщения
 var isSend = false;
@@ -31,7 +32,7 @@ function sendMessage() {
 
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:5000/Api/SendMessage',
+        url: '/Api/SendMessage',
         data: json,
         success: sendMessageSuccess,
         error: sendMessageError,
@@ -133,12 +134,20 @@ async function getUpdate() {
     var json = JSON.stringify({ UserGuid: userGuid, StateId:stateId });
     await $.ajax({
         type: 'POST',
-        url: 'http://localhost:5000/Api/GetUpdates',
+        url: '/Api/GetUpdates',
         data: json,
         success: loopSuccess,
         error: loopError,
         timeout: 60000,
-        contentType: "application/json"
+        contentType: "application/json",
+        crossDomain: true,
+        dataType: 'json',
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        },
+        xhrFields: {
+            withCredentials: true
+        }
     });
 }
 
