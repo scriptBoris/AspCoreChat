@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Чат";
+}
+@model HomeViewModel
+
+<input value="@Model.StateId" id="stateId" hidden/>
+
+<div class="text-center">
+    <h1 class="display-4 mb-5">Добро пожаловать в чат!</h1>
+</div>
+
+<table width="100%" height="100%">
+    <colgroup>
+        <col span="1" style="width: 70%"/>
+        <col span="1" style="width: 30%"/>
+    </colgroup>
+
+    <tr style="height: 90%">
+        <td class="justify-content-start">
+            @*Список сообщений*@
+            <div id="messageBox" class="pre-scrollable overflow-auto pr-2">
+                @foreach (var item in Model.Messages)
+                {
+                    string align = "justify-content-start";
+                    if (item.IsSelfMessage)
+                        align = "justify-content-end";
+
+                    <div class="d-flex @align">
+                        <div class="msg_containerLeft mb-2 p-1">
+                            <table>
+                                <tr>
+                                    <td class="chattop">
+                                        <strong class="chatname">@item.Author.Name</strong> 
+                                        <span class="chatdate">&nbsp;&nbsp;@item.Date.ToString("HH:mm")</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="chattext">
+                                        @item.Text
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </div>
+        </td>
+        <td rowspan="2" style="vertical-align:super">
+            <div id="usersBox" class="pre-scrollable overflow-auto">
+                @*Здесь будет Список пользователей*@
+                @foreach (var item in Model.Members)
+                {
+                    string userNameId = "userNameId" + item.Id;
+                    string userStatusId = "userStatusId" + item.Id;
+                    string userStatus = "";
+                    if (item.Status == WebApplication6.Core.Enums.UserStatus.Online)
+                        userStatus = "В сети";
+                    else
+                        userStatus = "Не в сети";
+
+                    <div id="@item.Id" class="d-flex mb-3 mx-3 p-2 bg-light">
+                        <span class="fas fa-user-circle chatuserimage"></span>
+                        <table class="ml-2">
+                            <tr>
+                                <td class="chattop">
+                                    <strong id="@userNameId" class="chatname">@item.Name</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="@userStatusId" class="chattext">
+                                    @userStatus
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                }
+            </div>
+        </td>
+    </tr>
+
+    @*Форма отправки*@
+    <tr style="height: 10%">
+        <td colspan="2">
+            <form id="sendForm" class="container p-2">
+                <div class="input-group mt-2">
+                    <input type="text" class="form-control" 
+                           placeholder="Введите сообщение" 
+                           aria-label="Введите сообщение"
+                           aria-describedby="basic-addon2"
+                           id="sendText">
+                    <div class="input-group-append">
+                        <input type="submit" class="btn btn-primary" value="Отправить"/>
+                    </div>
+                </div>
+            </form>
+        </td>
+    </tr>
+</table>
+
+@section Scripts
+{
+    <script src="/js/chat.js"></script>
+}

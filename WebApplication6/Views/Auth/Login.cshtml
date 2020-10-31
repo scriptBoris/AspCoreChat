@@ -1,0 +1,38 @@
+﻿@model LoginViewModel
+
+<div class="vertical-center">
+    <form asp-action="Login" asp-controller="Auth"
+          asp-anti-forgery="true"
+          class="border rounded bg-light  col-lg-4 offset-lg-4   col-xl-2 offset-xl-5  col-10 offset-1 pt-3 mb-5">
+
+        <div class="form-group">
+            <label for="inputEmail" class="col-sm-12 control-label" asp-for="Name">Введите имя</label>
+            <div class="col-12">
+                <input type="text" asp-for="Name" class="form-control" id="inputName">
+                <span asp-validation-for="Name" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail" class="col-sm-12 control-label" asp-for="Password">Введите пароль</label>
+            <div class="col-12">
+                <input type="password" asp-for="Password" class="form-control" id="inputPassword">
+                <span asp-validation-for="Password" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail" class="col-sm-12 control-label" asp-for="Password">Введите пароль еще раз</label>
+            <div class="col-12">
+                <input type="password" asp-for="PasswordAccept" class="form-control" id="inputPassword2">
+                <span asp-validation-for="PasswordAccept" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Войти</button>
+            </div>
+        </div>
+    </form>
+</div>
